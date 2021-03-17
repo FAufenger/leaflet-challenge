@@ -7,7 +7,7 @@ The USGS is interested in building a new set of tools that will allow them visua
 
 ## Level 1: Basic Visualization
 
-#### Get Data set
+### Get Data set
 The USGS provides earthquake data in a number of different formats, updated every 5 minutes. This project uses the URL of this JSON to pull in the data for our visualization. The data can be found at https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
 
 ### Import & Visualize the Data
