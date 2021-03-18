@@ -26,8 +26,8 @@ function createMap(earthquakes) {
 
     // Create the map object with options
     var map = L.map("map-id", {
-        center: [40.73, -74.0059],
-        zoom: 12,
+        center: [15.62, -12.42],
+        zoom: 2.4,
         layers: [lightmap, earthquakes]
     });
 
@@ -48,15 +48,21 @@ function createMarkers(response) {
   // Loop through the stations array
   for (var index = 0; index < quakeFeatures.length; index++) {
     var features = quakeFeatures[index];
-
-    // For each station, create a marker and bind a popup with the station's name
-    var earthquakeMark = L.marker([features.geometry.coordinates[0], features.geometry.coordinates[1]])
+    // To pull list of coordinates from coord list
+    var coordList = features.geometry.coordinates;
+    // For each latitude and longitude, create a marker and bind a popup with the data
+    var earthquakeMark = L.marker(coordList.slice(0, 2).reverse())
         .bindPopup("<h3>" + features.properties.place + "<h3><h3>Magnitude: " + features.properties.mag + "</h3>");
 
+    //console.log(features.geometry.coordinates);
+    //console.log(features.geometry.coordinates[1]);
+    //console.log(features)
+    //console.log(coordList.slice(0, 2));
     // Add the marker to the bikeMarkers array
     earthquakeMarkers.push(earthquakeMark);
-  }
+  };
 
+  console.log(earthquakeMarkers);
   // Create a layer group made from the bike markers array, pass it into the createMap function
   createMap(L.layerGroup(earthquakeMarkers));
 }
@@ -64,3 +70,19 @@ function createMarkers(response) {
 
 // Perform an API call to the EarthQuake API to get information. Call createMarkers when complete
 d3.json(earthquake7url, createMarkers);
+
+/*
+    // GeoJSON layer
+    L.geoJson(data, {
+        // Maken cricles
+        pointToLayer: function(feature, latlng) {
+          return L.circleMarker(latlng);
+        },
+        // cirecle style
+        style: styleInfo,
+        // popup for each marker
+        onEachFeature: function(feature, layer) {
+          layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place);
+        }
+      }).addTo(myMap);
+*/
