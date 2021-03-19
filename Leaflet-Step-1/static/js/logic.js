@@ -33,7 +33,7 @@ function createMap(earthquakes, magnitude) {
     var overlayMaps = {
         "Earthquakes": earthquakes,
         "Magnitude": magnitude
-        
+
     };
     // // Trouble shooting.. checking values
     // console.log(earthquakes);
@@ -53,21 +53,32 @@ function createMap(earthquakes, magnitude) {
 }
 
 
-function chooseColor(magnitudeLevel) {
+function chooseColor(earthquakeDepth) {
     switch (true) {
-        case magnitudeLevel > 50:
-            return "red";
-        case magnitudeLevel > 40:
-            return "yellow";
-        case magnitudeLevel > 30:
-            return "green";
-        case magnitudeLevel > 20:
-            return "blue";
-        case magnitudeLevel > 10:
-            return "orange";
+        case earthquakeDepth > 90:
+            return "#ff0D0D";
+        case earthquakeDepth > 70:
+            return "#FF4E11";
+        case earthquakeDepth > 50:
+            return "#FF8E15";
+        case earthquakeDepth > 30:
+            return "#FaB733";
+        case earthquakeDepth > 10:
+            return "#ACB334";
         default:
-            return "purple";
+            return "#69B34C";
     };
+}
+
+// set radiuss from magnitude
+function radiusHelper(magnitudeValue) {
+    if (magnitudeValue <= 1) {
+        return 1;
+    // } else if (magnitudeValue >= 30) {
+    //     return magnitudeValue;
+    } else {
+        return magnitudeValue*6;
+    }
 }
 
 
@@ -96,24 +107,25 @@ function createMarkers(response) {
 
         ////// Magnitude Layer ///////
         // Add magnitude color to visiulation
-        var magnitudeList =  L.circleMarker(coordList.slice(0, 2).reverse(), {
-                color: "white",
-                fillColor: chooseColor(coordList.slice(2, 3)),
-                fillOpacity: 0.4,
-                weight: 1.5,
-                radius: coordList.slice(2, 3)
+        var depthOfQuake = coordList.slice(2, 3)
+        var magnitudeList = L.circleMarker(coordList.slice(0, 2).reverse(), {
+            color: "white",
+            fillColor: chooseColor(depthOfQuake),
+            fillOpacity: 0.4,
+            weight: 1.5,
+            radius: radiusHelper(features.properties.mag)
         })
-        .bindPopup("<h3>" + features.properties.place + "<h3><h3>Magnitude: " + features.properties.mag + "</h3>");
+            .bindPopup("<h3>" + features.properties.place + "<h3><h3>Magnitude: " + features.properties.mag + "</h3>");
         ;
-        
+
         //  Add magnitude to list for map 
         magnitude.push(magnitudeList);
 
-        //console.log(coordList.slice(2, 3));
+        console.log(coordList.slice(2, 3));
     };
     // // Troubleshooting checking values
     // console.log(coordList.slice(2, 3));
-    // console.log(magnitude);
+    console.log(magnitude);
 
     // Create a layer group made from the bike markers array, pass it into the createMap function
     createMap(L.layerGroup(earthquakeMarkers), L.layerGroup(magnitude));
