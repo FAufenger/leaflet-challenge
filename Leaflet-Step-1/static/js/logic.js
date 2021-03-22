@@ -31,25 +31,51 @@ function createMap(earthquakes, magnitude) {
 
     // Create an overlayMaps object to hold the bikeStations layer
     var overlayMaps = {
-        "Earthquakes": earthquakes,
-        "Magnitude": magnitude
-
+        "Magnitude & Depth": magnitude,
+        "Earthquake Markers": earthquakes
     };
     // // Trouble shooting.. checking values
     // console.log(earthquakes);
     // console.log(magnitude);
 
+
+
+
     // Create the map object with options
     var map = L.map("map-id", {
         center: [15.62, -12.42],
-        zoom: 2.8,
-        layers: [lightmap, earthquakes]
+        zoom: 3,
+        layers: [lightmap, magnitude]
     });
 
     // Create a layer control, pass in the baseMaps and overlayMaps. Add the layer control to the map
     L.control.layers(baseMaps, overlayMaps, {
         collapsed: false
     }).addTo(map);
+
+
+    // // Create Legend variable
+    // var legend = L.control({
+    //     position: "bottomright"
+    //   });
+
+    // // Legend div creation
+    // legend.onAdd = function() {
+    //     var div = L.DomUtil.create("div", "info legend");
+
+    //     var grades = [0, 1, 2, 3, 4, 5];
+    //     var colors = [
+    //         "#98ee00",
+    //         "#d4ee00",
+    //         "#eecc00",
+    //         "#ee9c00",
+    //         "#ea822c",
+    //         "#ea2c2c"
+    //     ];
+
+
+
+
 }
 
 
@@ -101,7 +127,7 @@ function createMarkers(response) {
         /////// Earthquakes Layer ///////
         // For each latitude and longitude, create a marker and bind a popup with the data
         var earthquakeMark = L.marker(coordList.slice(0, 2).reverse())
-            .bindPopup("<h3>" + features.properties.place + "<h3><h3>Magnitude: " + features.properties.mag + "</h3>");
+            .bindPopup("<h3>" + features.properties.place + "</h3><h3>Magnitude: " + features.properties.mag + "</h3><h3>Depth: "+ coordList.slice(2, 3) + "</h3>");
         // Add earthquarkmark to preset list
         earthquakeMarkers.push(earthquakeMark);
 
@@ -115,17 +141,17 @@ function createMarkers(response) {
             weight: 1.5,
             radius: radiusHelper(features.properties.mag)
         })
-            .bindPopup("<h3>" + features.properties.place + "<h3><h3>Magnitude: " + features.properties.mag + "</h3>");
+            .bindPopup("<h3>" + features.properties.place + "<h3><h3>Magnitude: " + features.properties.mag + "</h3><h3>Depth: "+ coordList.slice(2, 3) + "</h3>");
         ;
 
         //  Add magnitude to list for map 
         magnitude.push(magnitudeList);
 
-        console.log(coordList.slice(2, 3));
+        //console.log(coordList.slice(2, 3));
     };
     // // Troubleshooting checking values
     // console.log(coordList.slice(2, 3));
-    console.log(magnitude);
+    // console.log(magnitude);
 
     // Create a layer group made from the bike markers array, pass it into the createMap function
     createMap(L.layerGroup(earthquakeMarkers), L.layerGroup(magnitude));
@@ -135,7 +161,11 @@ function createMarkers(response) {
 // Perform an API call to the EarthQuake API to get information. Call createMarkers when complete
 d3.json(earthquake7url, createMarkers);
 
+
 /*
+////////////////////////////////////////
+//BSC helper suggested this code......
+
     // GeoJSON layer
     L.geoJson(data, {
         // Maken cricles
