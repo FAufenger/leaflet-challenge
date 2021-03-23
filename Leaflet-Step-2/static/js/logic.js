@@ -65,7 +65,8 @@ function createMap(earthquakes, magnitude, magnitude30) {
         layers: [satellitenmap, magnitude, tectonicPlates]
     });
 
-    // Create a layer control, pass in the baseMaps and overlayMaps. Add the layer control to the map
+    // Create a layer control, pass in the baseMaps and overlayMaps. 
+    // Add the layer control to the map
     L.control.layers(baseMaps, overlayMaps, {
         collapsed: false
     }).addTo(map);
@@ -84,7 +85,8 @@ function createMap(earthquakes, magnitude, magnitude30) {
         div.innerHTML ='<div><b>Earthquake Depth</b></div';
       
         for(var i=0; i <grades.length; i++){
-            div.innerHTML +='<i style="background:'+chooseColor(grades[i])+ '">&nbsp;</i>&nbsp;&nbsp;'+labels[i]+'<br/>';
+            div.innerHTML +='<i style="background:'+chooseColor(grades[i])+ 
+            '">&nbsp;</i>&nbsp;&nbsp;'+labels[i]+'<br/>';
         }
     return div;
     }; legend.addTo(map);
@@ -141,7 +143,11 @@ function createMarkers(response) {
         /////// Earthquakes Layer ///////
         // For each latitude and longitude, create a marker and bind a popup with the data
         var earthquakeMark = L.marker(coordList.slice(0, 2).reverse())
-            .bindPopup("<h3>" + features.properties.place + "</h3><h3>Magnitude: " + features.properties.mag + "</h3><h3>Depth: "+ coordList.slice(2, 3) + "</h3>");
+            .bindPopup("<h3>" + features.properties.place + 
+                "</h3><h3>Magnitude: " + features.properties.mag + 
+                "</h3><h3>Depth: "+ coordList.slice(2, 3) + 
+                "</h3>");
+
         // Add earthquarkmark to preset list
         earthquakeMarkers.push(earthquakeMark);
 
@@ -155,7 +161,10 @@ function createMarkers(response) {
             weight: 1.5,
             radius: radiusHelper(features.properties.mag)
         })
-            .bindPopup("<h3>" + features.properties.place + "<h3><h3>Magnitude: " + features.properties.mag + "</h3><h3>Depth: "+ coordList.slice(2, 3) + "</h3>");
+            .bindPopup("<h3>" + features.properties.place + 
+                "<h3><h3>Magnitude: " + features.properties.mag + 
+                "</h3><h3>Depth: "+ coordList.slice(2, 3) + 
+                "</h3>");
         ;
        
         //  Add magnitude to list for map 
@@ -163,9 +172,12 @@ function createMarkers(response) {
 
     };
 
-    // Check total earthquakes for 7 day period
-    console.log(`Total earthquakes for past 7 days: ${quakeFeatures.length}`)
-    
+    // Display total earthquakes for 7 day period
+
+    var textArea1 = document.getElementById("count7day");
+    textArea1.append( `Total earthquakes for past 07 days: ${quakeFeatures.length}`);
+
+        
     //////////////////////////////
     function createMarkers30(response) {
 
@@ -207,10 +219,12 @@ function createMarkers(response) {
             //  Add magnitude to list for map 
             magnitude30.push(magnitudeList);
         };
-        
-        // Check total earthquakes for 30 day period
-        console.log(`Total earthquakes for past 30 days: ${quakeFeatures.length}`)
-           
+
+        // Display total earthquakes for 30 day period
+        var textArea1 = document.getElementById("count30day");
+        textArea1.append(`Total earthquakes for past 30 days: ${quakeFeatures.length}`);
+       
+                   
         // Create a layer group made from the bike markers array, pass it into the createMap function
         createMap(L.layerGroup(earthquakeMarkers), L.layerGroup(magnitude), L.layerGroup(magnitude30));
     }
@@ -238,3 +252,8 @@ d3.json(earthquake7url, createMarkers);
 //d3.json(earthquake30url, createMarkers);
 d3.json(tectonicUrl, createTectonicPlates);
 
+
+    // var textArea1 = document.getElementById("#count7day");
+    // var text = document.createTextNode();
+
+    // textArea1.appendChild(text);
