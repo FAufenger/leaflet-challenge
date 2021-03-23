@@ -182,7 +182,7 @@ function createMarkers(response) {
             // To pull list of coordinates from coord list
             var coordList = features.geometry.coordinates;
 
-            ////////////////////////////////// Taking too long to load causing page to be unrespsive /////////////////////////
+            ////////////////////////////////// Code works but takes too long to load causing page to be unrespsive /////////////////////////
             // /////// Earthquakes Layer ///////
             // // For each latitude and longitude, create a marker and bind a popup with the data
             // var earthquakeMark = L.marker(coordList.slice(0, 2).reverse())
@@ -199,13 +199,15 @@ function createMarkers(response) {
                 fillOpacity: 0.4,
                 weight: 1.5,
                 radius: radiusHelper(features.properties.mag)
-            })
-                .bindPopup("<h3>" + features.properties.place + "<h3><h3>Magnitude: " + features.properties.mag + "</h3><h3>Depth: "+ coordList.slice(2, 3) + "</h3>");
-            ;
+            }).bindPopup("<h3>" + features.properties.place + 
+                    "<h3><h3>Magnitude: " + features.properties.mag + 
+                    "</h3><h3>Depth: "+ coordList.slice(2, 3) + 
+                    "</h3>");
 
             //  Add magnitude to list for map 
             magnitude30.push(magnitudeList);
         };
+        
         // Check total earthquakes for 30 day period
         console.log(`Total earthquakes for past 30 days: ${quakeFeatures.length}`)
            
