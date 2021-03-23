@@ -253,7 +253,8 @@ d3.json(earthquake7url, createMarkers);
 d3.json(tectonicUrl, createTectonicPlates);
 
 
-    // var textArea1 = document.getElementById("#count7day");
-    // var text = document.createTextNode();
 
-    // textArea1.appendChild(text);
+
+var textArea1 = document.getElementById("date");
+        textArea1.append(`Last check for new data from database: ${new Date(new Date().getTime())}`);
+       

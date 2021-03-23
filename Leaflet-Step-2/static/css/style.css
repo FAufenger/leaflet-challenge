@@ -20,6 +20,13 @@ h1 {
   margin-left: 25px;
 }
 
+#date {
+  font-size: 22px;
+  padding-top: 5px;
+  text-align: left;
+  margin-left: 25px;
+}
+
 #count30day {
   font-size: 22px;
   text-align: left;
