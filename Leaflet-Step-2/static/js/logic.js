@@ -49,12 +49,16 @@ function createMap(earthquakes, magnitude) {
 
     // Create an overlayMaps object to hold the bikeStations layer
     var overlayMaps = {
-        "Magnitude & Depth": magnitude,
-        "Earthquake Markers": earthquakes
+        "Magnitude & Depth (7 Day)": magnitude,
+        "Earthquake Markers (7 Day)": earthquakes
+        //"Magnitude & Depth (30 Day)": magnitude,
+        //"Earthquake Markers (30 Day)": earthquakes
     };
     // // Trouble shooting.. checking values
     // console.log(earthquakes);
     // console.log(magnitude);
+
+
 
 
     // Create the map object with options
@@ -91,6 +95,7 @@ function createMap(earthquakes, magnitude) {
 }
 
 
+
 function chooseColor(earthquakeDepth) {
     switch (true) {
         case earthquakeDepth > 90:
@@ -108,7 +113,6 @@ function chooseColor(earthquakeDepth) {
     };
 }
 
-
 // set radiuss from magnitude
 function radiusHelper(magnitudeValue) {
     if (magnitudeValue <= 1) {
@@ -119,6 +123,7 @@ function radiusHelper(magnitudeValue) {
         return magnitudeValue*6;
     }
 }
+
 
 
 function createMarkers(response) {
@@ -172,14 +177,12 @@ function createMarkers(response) {
 
 // Perform an API call to the EarthQuake API to get information. Call createMarkers when complete
 d3.json(earthquake7url, createMarkers);
-
-
-
+//d3.json(earthquake30url, createMarkers);
 
 
 /*
 ////////////////////////////////////////
-//BSC helper suggested this style code...... Need to research more
+//BSC helper suggested this code......
 
     // GeoJSON layer
     L.geoJson(data, {
