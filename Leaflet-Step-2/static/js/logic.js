@@ -2,6 +2,8 @@
 earthquake7url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson';
 // url for past 30 days of Earthquakes
 earthquake30url = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson';
+//
+tectonicUrl = 'https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json'
 
 
 function createMap(earthquakes, magnitude) {
@@ -49,16 +51,12 @@ function createMap(earthquakes, magnitude) {
 
     // Create an overlayMaps object to hold the bikeStations layer
     var overlayMaps = {
-        "Magnitude & Depth (7 Day)": magnitude,
-        "Earthquake Markers (7 Day)": earthquakes
+        "Magnitude & Depth": magnitude,
+        "Earthquake Markers": earthquakes,
+        "Tectionic Plates": tectonicPlates
         //"Magnitude & Depth (30 Day)": magnitude,
         //"Earthquake Markers (30 Day)": earthquakes
     };
-    // // Trouble shooting.. checking values
-    // console.log(earthquakes);
-    // console.log(magnitude);
-
-
 
 
     // Create the map object with options
@@ -175,26 +173,21 @@ function createMarkers(response) {
 };
 
 
+// Add Layer for Tectonic Plates
+var tectonicPlates = new L.LayerGroup();
+// Create function to style understand/ sort through data
+function createTectonicPlates(Data) {
+    L.geoJson(Data, {
+        color: "orange",
+        weight: 3
+    })
+    .addTo(tectonicPlates);
+};
+
+
+
 // Perform an API call to the EarthQuake API to get information. Call createMarkers when complete
 d3.json(earthquake7url, createMarkers);
 //d3.json(earthquake30url, createMarkers);
+d3.json(tectonicUrl, createTectonicPlates);
 
-
-/*
-////////////////////////////////////////
-//BSC helper suggested this code......
-
-    // GeoJSON layer
-    L.geoJson(data, {
-        // Maken cricles
-        pointToLayer: function(feature, latlng) {
-          return L.circleMarker(latlng);
-        },
-        // cirecle style
-        style: styleInfo,
-        // popup for each marker
-        onEachFeature: function(feature, layer) {
-          layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place);
-        }
-      }).addTo(myMap);
-*/
