@@ -10,6 +10,8 @@ The USGS is interested in building a new set of tools that will allow them visua
 ### Get Data set
 The USGS provides earthquake data in a number of different formats, updated every 5 minutes. This project uses the URL of this JSON to pull in the data for our visualization. The data can be found at https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
 
+![level 1 image](./images/mapScreenShot.png)
+
 ### Import & Visualize the Data
  * Create a map using Leaflet that plots all of the earthquakes from your data set based on their longitude and latitude.
  * Data markers reflect the magnitude of the earthquake by their size and and depth of the earth quake by color. 
@@ -17,12 +19,19 @@ The USGS provides earthquake data in a number of different formats, updated ever
  * Include popups that provide additional information about the earthquake when a marker is clicked.
  * Has a legend that will provide context for your map data.
 
+![sample json](./images/sample_json_data.png)
+
 ## Level 2: Multi-plot level
 
 The USGS wants to plot a second data set on your map to illustrate the relationship between tectonic plates and seismic activity. Thus need to pull in a second data set and visualize it along side your original set of data. Data on tectonic plates can be found at https://github.com/fraxen/tectonicplates.
 
+![level 2 image](./images/map2ScreenShot.png)
+
  * Plot a second data set on the map.
  * Add a number of base maps to choose from as well as separate out the two different data sets into overlays that can be turned on and off independently.
-* Add layer controls to the map.
+ * Add layer controls to the map.
 
+sample Tctonic data:
+
+![sample json](./images/sampleTectonicData.png)
 
