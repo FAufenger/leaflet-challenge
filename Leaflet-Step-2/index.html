@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Leaflet Step-1</title>
+    <title>Leaflet Step-2</title>
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -17,6 +17,7 @@
   </head>
 
   <body>
+  <!-- div for title-->
     <div class="container">
       <div class="row">
         <div class="col-xs-12 col-md-12">
@@ -24,18 +25,32 @@
         </div>
       </div>
     </div>
-      <!-- The div that holds the map -->
-      <div id="map-id"></div>
+    
+    <!-- The div that holds the map -->
+    <div id="map-id"></div>
 
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-12 col-md-12">
-            <div id="count7day"></div>
-            <div id="count30day"></div>
-            <div id = "date"></div>
-          </div>
+    <!-- div for below text-->
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <div id="countHour"></div>
+          <div id="count1day"></div>
+          <div id="count7day"></div>
+          <div id="count30day"></div>
+          <div id = "date"></div>
         </div>
       </div>
+    </div>
+
+    <!-- Footer-->
+    <div id="footer">
+      <hr>
+      <p>Data source: <br>
+        <b>USGS:</b> (updated every minute) https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php<br>
+        <b>Github:</b> https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json
+      </p>
+    </div>
+
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"

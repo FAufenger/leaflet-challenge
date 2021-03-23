@@ -12,6 +12,19 @@ h1 {
   height: 86%;
   width: 100%;
 }
+#countHour {
+  font-size: 22px;
+  padding-top: 5px;
+  text-align: left;
+  margin-left: 25px;
+}
+
+#count1day {
+  font-size: 22px;
+  padding-top: 5px;
+  text-align: left;
+  margin-left: 25px;
+}
 
 #count7day {
   font-size: 22px;

@@ -1,4 +1,4 @@
-const API_KEY = "Your API Key here";
+const API_KEY = "Your API Key Here";
 
 
 // // Import private info for API key
