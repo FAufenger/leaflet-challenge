@@ -9,8 +9,18 @@ function createMap(earthquakes, magnitude) {
     // Create the tile layer that will be the background of our map
     var lightmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
         attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+        tileSize: 512,
+        zoomOffset: -1,
         maxZoom: 18,
         id: "light-v10",
+        accessToken: API_KEY
+    });
+    var darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+        attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+        tileSize: 512,
+        zoomOffset: -1,
+        maxZoom: 18,
+        id: "dark-v10",
         accessToken: API_KEY
     });
     var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -21,18 +31,28 @@ function createMap(earthquakes, magnitude) {
         id: "mapbox/streets-v11",
         accessToken: API_KEY
     });
+    /*
+    var outdoormap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+        attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+        maxZoom: 18,
+        id: "outdoors-v10",
+        accessToken: API_KEY
+    });*/
 
 
     // Create a baseMaps object to hold the lightmap layer
     var baseMaps = {
         "Light Map": lightmap,
+        "Dark Map": darkmap,
         "Street Map": streetmap
     };
 
     // Create an overlayMaps object to hold the bikeStations layer
     var overlayMaps = {
-        "Magnitude & Depth": magnitude,
-        "Earthquake Markers": earthquakes
+        "Magnitude & Depth (7 Day)": magnitude,
+        "Earthquake Markers (7 Day)": earthquakes
+        //"Magnitude & Depth (30 Day)": magnitude,
+        //"Earthquake Markers (30 Day)": earthquakes
     };
     // // Trouble shooting.. checking values
     // console.log(earthquakes);
@@ -54,29 +74,26 @@ function createMap(earthquakes, magnitude) {
     }).addTo(map);
 
 
-    // // Create Legend variable
-    // var legend = L.control({
-    //     position: "bottomright"
-    //   });
+    // Create Legend variable
+    var legend = L.control({ position: "bottomright" });
 
-    // // Legend div creation
-    // legend.onAdd = function() {
-    //     var div = L.DomUtil.create("div", "info legend");
-
-    //     var grades = [0, 1, 2, 3, 4, 5];
-    //     var colors = [
-    //         "#98ee00",
-    //         "#d4ee00",
-    //         "#eecc00",
-    //         "#ee9c00",
-    //         "#ea822c",
-    //         "#ea2c2c"
-    //     ];
-
-
-
+    // Legend div creation
+    legend.onAdd = function() {
+        var div = L.DomUtil.create("div", "legend");
+        var labels = ["-10 km","10-30 km","30-50 km","50-70 km","70-90 km","90+ km"];
+        //var categories = ['<strong>Depth of Earthquake</strong>'];
+        var grades = [0, 11, 31, 51, 71, 91];
+      
+        div.innerHTML ='<div><b>Earthquake Depth</b></div';
+      
+        for(var i=0; i <grades.length; i++){
+            div.innerHTML +='<i style="background:'+chooseColor(grades[i])+ '">&nbsp;</i>&nbsp;&nbsp;'+labels[i]+'<br/>';
+        }
+    return div;
+    }; legend.addTo(map);
 
 }
+
 
 
 function chooseColor(earthquakeDepth) {
@@ -160,6 +177,7 @@ function createMarkers(response) {
 
 // Perform an API call to the EarthQuake API to get information. Call createMarkers when complete
 d3.json(earthquake7url, createMarkers);
+//d3.json(earthquake30url, createMarkers);
 
 
 /*
